@@ -1,0 +1,36 @@
+name: "reusable workflow"
+on:
+  workflow_dispatch:
+    inputs:
+      food:
+        description: "chicken or beef?"
+        required: true
+  workflow_call:
+    inputs:
+      food:
+        description: "chicken or beef?"
+        required: true
+        type: string
+
+jobs:
+  launch:
+    runs-on: ubuntu-latest
+    env:
+      food: ''
+    steps:
+      - name: set food value
+        run: |
+          if [ -n '${{ inputs.food }}' ]; then
+            echo 'food=${{ inputs.food }}' >> $GITHUB_ENV
+          fi
+          if [ -n '${{ github.event.inputs.food }}' ]; then
+            echo 'food=${{ github.event.inputs.food }}' >> $GITHUB_ENV
+          fi
+      - name: "check if env.food is specified"
+        run: |
+          if [ -z '${{ env.food }}' ]; then
+            echo "food must be specified."
+            exit 1
+          fi
+      - run: echo "${{ env.food }} please."
+      - run: echo "sha ${GITHUB_SHA}"

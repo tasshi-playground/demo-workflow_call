@@ -1,0 +1,21 @@
+name: 'workflow'
+on:
+  push:
+
+jobs:
+  launch-beef:
+    uses: ./.github/workflows/reusable.yml
+    with:
+      food: "beef"
+  launch-chiken:
+    uses: ./.github/workflows/reusable.yml
+    with:
+      food: "chicken"
+  launch-empty:
+    uses: ./.github/workflows/reusable.yml
+    with:
+      food: ""
+  launch-number:
+    uses: ./.github/workflows/reusable.yml
+    with:
+      food: 1
